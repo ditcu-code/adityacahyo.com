@@ -29,6 +29,9 @@ export const Project = defineDocumentType(() => ({
 			type: "string",
 			required: true,
 		},
+		platform: {
+			type: "string",
+		},
 		description: {
 			type: "string",
 			required: true,
@@ -42,6 +45,14 @@ export const Project = defineDocumentType(() => ({
 		repository: {
 			type: "string",
 		},
+		images: {
+			type: "list",
+			of: { type: "string" },
+		},
+		stacks: {
+			type: "list",
+			of: { type: "string" },
+		}
 	},
 	computedFields,
 }));
