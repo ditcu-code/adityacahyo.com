@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 		default: "adityacahyo.com",
 		template: "%s | adityacahyo.com",
 	},
-	description: "Software engineer",
+	description: "a software engineer",
 	openGraph: {
 		title: "adityacahyo.com",
 		description:
-			"Software engineer",
+			"a software engineer",
 		url: "https://adityacahyo.com",
 		siteName: "adityacahyo.com",
 		images: [
@@ -40,6 +40,8 @@ export const metadata: Metadata = {
 	twitter: {
 		title: "Aditya Cahyo",
 		card: "summary_large_image",
+		images: "https://azgiwpdzokgesofpzclb.supabase.co/storage/v1/object/public/public/images/og.png",
+		description: "a software engineer specializing in frontend development for web and iOS platforms, based in Indonesia."
 	},
 	icons: {
 		shortcut: "/favicon.png",
