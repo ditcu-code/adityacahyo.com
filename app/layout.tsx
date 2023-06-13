@@ -1,6 +1,6 @@
 import "../global.css";
-import { Inter } from "@next/font/google";
-import LocalFont from "@next/font/local";
+import { Inter } from "next/font/google";
+import LocalFont from "next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
 
@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 		default: "adityacahyo.com",
 		template: "%s | adityacahyo.com",
 	},
-	description: "Software engineer at upstash.com and founder of planetfall.io",
+	description: "Software engineer",
 	openGraph: {
 		title: "adityacahyo.com",
 		description:
-			"Software engineer at upstash.com and founder of planetfall.io",
+			"Software engineer",
 		url: "https://adityacahyo.com",
 		siteName: "adityacahyo.com",
 		images: [
