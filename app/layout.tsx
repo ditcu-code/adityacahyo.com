@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 		},
 	},
 	twitter: {
-		title: "adityacahyo",
+		title: "Aditya Cahyo",
 		card: "summary_large_image",
 	},
 	icons: {
