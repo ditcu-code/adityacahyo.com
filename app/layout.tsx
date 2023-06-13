@@ -4,6 +4,8 @@ import LocalFont from "next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
 
+const metaImage: string = "https://azgiwpdzokgesofpzclb.supabase.co/storage/v1/object/public/public/images/og.png"
+
 export const metadata: Metadata = {
 	title: {
 		default: "adityacahyo.com",
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
 		siteName: "adityacahyo.com",
 		images: [
 			{
-				url: "https://adityacahyo.com/og.png",
+				url: metaImage,
 				width: 1920,
 				height: 1080,
 			},
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
 	twitter: {
 		title: "Aditya Cahyo",
 		card: "summary_large_image",
-		images: "https://azgiwpdzokgesofpzclb.supabase.co/storage/v1/object/public/public/images/og.png",
+		images: metaImage,
 		description: "a software engineer specializing in frontend development for web and iOS platforms, based in Indonesia."
 	},
 	icons: {
