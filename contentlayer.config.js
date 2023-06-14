@@ -14,6 +14,10 @@ const computedFields = {
 		type: "string",
 		resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
 	},
+	detail: {
+		type: "string",
+		resolve: (doc) => doc._raw.flattenedPath.split("/").slice(2).join("/"),
+	},
 };
 
 export const Project = defineDocumentType(() => ({
