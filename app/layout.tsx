@@ -2,7 +2,7 @@ import "../global.css";
 import { Inter } from "next/font/google";
 import LocalFont from "next/font/local";
 import { Metadata } from "next";
-import { Analytics } from "./components/analytics";
+import { Analytics } from '@vercel/analytics/react';
 
 const metaImage: string = "https://azgiwpdzokgesofpzclb.supabase.co/storage/v1/object/public/public/images/og.png"
 
@@ -75,6 +75,7 @@ export default function RootLayout({
 				}`}
 			>
 				{children}
+				<Analytics />
 			</body>
 		</html>
 	);
