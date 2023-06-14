@@ -4,7 +4,7 @@ import LocalFont from "next/font/local";
 import { Metadata } from "next";
 import { Analytics } from '@vercel/analytics/react';
 
-const metaImage: string = "https://azgiwpdzokgesofpzclb.supabase.co/storage/v1/object/public/public/images/og.png"
+const metaImage: string = "https://adityacahyo.com/og.png"
 
 export const metadata: Metadata = {
 	title: {
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 		images: [
 			{
 				url: metaImage,
-				width: 1920,
-				height: 1080,
+				width: 1400,
+				height: 700,
 			},
 		],
 		locale: "en-US",
@@ -66,9 +66,6 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
-			<head>
-				<Analytics />
-			</head>
 			<body
 				className={`bg-black ${
 					process.env.NODE_ENV === "development" ? "debug-screens" : undefined
