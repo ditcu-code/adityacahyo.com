@@ -8,6 +8,7 @@ type Props = {
   project: {
     platform?: string
     url?: string
+    appstoreUrl?: string
     title: string
     description: string
     published?: boolean
@@ -121,10 +122,10 @@ export const Header: React.FC<Props> = ({ project, views, backLink }) => {
             </p>
           </div>
 
-          {project.published && project.platform == "iOS app" && (
+          {project.appstoreUrl != null && (
             <a
               className="py-4"
-              href="https://apps.apple.com/us/app/cowriter/id6449455105"
+              href={project.appstoreUrl}
             >
               <Image
                 alt="download cowriter in appstore"
