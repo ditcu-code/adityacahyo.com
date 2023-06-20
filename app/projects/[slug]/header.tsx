@@ -26,8 +26,8 @@ export const Header: React.FC<Props> = ({ project, views, backLink }) => {
   const links: { label: string; href: string }[] = []
   if (project.repository) {
     links.push({
-      label: "GitHub",
-      href: `https://github.com/${project.repository}`,
+      label: "Repo",
+      href: project.repository,
     })
   }
   if (project.url) {
