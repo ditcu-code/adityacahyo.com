@@ -1,11 +1,10 @@
 "use client"
 import { Project } from "@/.contentlayer/generated"
 import { Platform } from "@/types/enums"
-import { Smartphone, Globe } from "lucide-react"
+import { Smartphone, Globe, Tablet, Watch } from "lucide-react"
 
 type PlatformIconProps = { project: Project }
 const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
-
   return (
     <div>
       {(() => {
@@ -15,6 +14,24 @@ const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
               <div className="tooltip">
                 <Smartphone size={"12pt"} opacity={0.4} />
                 <span className="text-xs tooltiptext">{Platform.ios}</span>
+              </div>
+            )
+          case Platform.ipados:
+            return (
+              <div className="tooltip">
+                <Tablet
+                  size={"12pt"}
+                  opacity={0.4}
+                  style={{ rotate: "-90deg" }}
+                />
+                <span className="text-xs tooltiptext">{Platform.ipados}</span>
+              </div>
+            )
+          case Platform.watchos:
+            return (
+              <div className="tooltip">
+                <Watch size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.watchos}</span>
               </div>
             )
           case Platform.web:
