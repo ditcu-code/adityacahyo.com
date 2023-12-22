@@ -14,6 +14,10 @@ const computedFields = {
 		type: "string",
 		resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
 	},
+	detail: {
+		type: "string",
+		resolve: (doc) => doc._raw.flattenedPath.split("/").slice(2).join("/"),
+	},
 };
 
 export const Project = defineDocumentType(() => ({
@@ -29,6 +33,9 @@ export const Project = defineDocumentType(() => ({
 			type: "string",
 			required: true,
 		},
+		platform: {
+			type: "string",
+		},
 		description: {
 			type: "string",
 			required: true,
@@ -42,6 +49,17 @@ export const Project = defineDocumentType(() => ({
 		repository: {
 			type: "string",
 		},
+		appstoreUrl: {
+			type: "string",
+		},
+		images: {
+			type: "list",
+			of: { type: "string" },
+		},
+		stacks: {
+			type: "list",
+			of: { type: "string" },
+		}
 	},
 	computedFields,
 }));
