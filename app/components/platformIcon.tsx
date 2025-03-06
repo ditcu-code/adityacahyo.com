@@ -1,60 +1,60 @@
-"use client";
-import { Project } from "@/.contentlayer/generated";
-import { Platform } from "@/types/enums";
-import { Smartphone, Globe, Tablet, Watch } from "lucide-react";
+"use client"
+import { Project } from "@/.contentlayer/generated"
+import { Platform } from "@/types/enums"
+import { Smartphone, Globe, Tablet, Watch } from "lucide-react"
 
-type PlatformIconProps = { project: Project };
+type PlatformIconProps = { project: Project }
 const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
-	return (
-		<div>
-			{(() => {
-				switch (project.platform) {
-					case Platform.ios:
-						return (
-							<div className="tooltip">
-								<Smartphone size={"12pt"} opacity={0.4} />
-								<span className="text-xs tooltiptext">{Platform.ios}</span>
-							</div>
-						);
-					case Platform.ipados:
-						return (
-							<div className="tooltip">
-								<Tablet
-									size={"12pt"}
-									opacity={0.4}
-									style={{ rotate: "-90deg" }}
-								/>
-								<span className="text-xs tooltiptext">{Platform.ipados}</span>
-							</div>
-						);
-					case Platform.watchos:
-						return (
-							<div className="tooltip">
-								<Watch size={"12pt"} opacity={0.4} />
-								<span className="text-xs tooltiptext">{Platform.watchos}</span>
-							</div>
-						);
-					case Platform.web:
-						return (
-							<div className="tooltip">
-								<Globe size={"12pt"} opacity={0.4} />
-								<span className="text-xs tooltiptext">{Platform.web}</span>
-							</div>
-						);
-					case Platform.both:
-						return (
-							<div className="flex tooltip">
-								<Smartphone size={"12pt"} opacity={0.4} />
-								<Globe size={"12pt"} opacity={0.4} />
-								<span className="text-xs tooltiptext">{Platform.both}</span>
-							</div>
-						);
+  return (
+    <div>
+      {(() => {
+        switch (project.platform) {
+          case Platform.ios:
+            return (
+              <div className="tooltip">
+                <Smartphone size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.ios}</span>
+              </div>
+            )
+          case Platform.ipados:
+            return (
+              <div className="tooltip">
+                <Tablet
+                  size={"12pt"}
+                  opacity={0.4}
+                  style={{ rotate: "-90deg" }}
+                />
+                <span className="text-xs tooltiptext">{Platform.ipados}</span>
+              </div>
+            )
+          case Platform.watchos:
+            return (
+              <div className="tooltip">
+                <Watch size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.watchos}</span>
+              </div>
+            )
+          case Platform.web:
+            return (
+              <div className="tooltip">
+                <Globe size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.web}</span>
+              </div>
+            )
+          case Platform.both:
+            return (
+              <div className="flex tooltip">
+                <Smartphone size={"12pt"} opacity={0.4} />
+                <Globe size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.both}</span>
+              </div>
+            )
 
-					default:
-						break;
-				}
-			})()}
-			<style jsx>{`
+          default:
+            break
+        }
+      })()}
+      <style jsx>{`
         /* Tooltip container */
         .tooltip {
           position: relative;
@@ -82,8 +82,8 @@ const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
           visibility: visible;
         }
       `}</style>
-		</div>
-	);
-};
+    </div>
+  )
+}
 
-export default PlatformIcon;
+export default PlatformIcon

@@ -2,9 +2,9 @@ import "../global.css";
 import { Inter } from "next/font/google";
 import LocalFont from "next/font/local";
 import { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from '@vercel/analytics/react';
 
-const metaImage: string = "https://adityacahyo.com/og.png";
+const metaImage: string = "https://adityacahyo.com/og.png"
 
 export const metadata: Metadata = {
 	title: {
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 	description: "a software engineer",
 	openGraph: {
 		title: "adityacahyo.com",
-		description: "a software engineer",
+		description:
+			"a software engineer",
 		url: "https://adityacahyo.com",
 		siteName: "adityacahyo.com",
 		images: [
@@ -42,8 +43,7 @@ export const metadata: Metadata = {
 		title: "Aditya Cahyo",
 		card: "summary_large_image",
 		images: metaImage,
-		description:
-			"a software engineer specializing in frontend development for web and iOS platforms, based in Indonesia.",
+		description: "a software engineer specializing in frontend development for web and iOS platforms, based in Indonesia."
 	},
 	icons: {
 		shortcut: "/favicon.png",
