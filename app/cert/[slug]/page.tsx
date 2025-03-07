@@ -9,6 +9,8 @@ type Props = {
 const certificateMap: Record<string, string> = {
   ada: "/pdf/cert-ada-adityac.pdf",
   glints: "/images/cert-glints-adityac.png",
+  hack4id: "/pdf/cert-hack4id-adityac.pdf",
+  hacksprint: "/pdf/cert-hacksprint-adityac.pdf",
 };
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
