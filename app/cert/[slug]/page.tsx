@@ -11,6 +11,7 @@ const certificateMap: Record<string, string> = {
   glints: "/images/cert-glints-adityac.png",
   hack4id: "/pdf/cert-hack4id-adityac.pdf",
   hacksprint: "/pdf/cert-hacksprint-adityac.pdf",
+  startupweekend: "/pdf/cert-startupweekend-adityac.pdf",
 };
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
