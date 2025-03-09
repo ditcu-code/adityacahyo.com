@@ -12,7 +12,6 @@ export default function Home() {
       <nav className="my-16 animate-fade-in">
         <ul
           className="flex items-center justify-center gap-4"
-          role="navigation"
           aria-label="Main Navigation"
         >
           {navigation.map((item) => (
