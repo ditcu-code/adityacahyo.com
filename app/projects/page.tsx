@@ -1,30 +1,29 @@
-import Link from "next/link"
-import React from "react"
-import { allProjects } from "contentlayer/generated"
-import { Navigation } from "../components/nav"
-import { Card } from "../components/card"
-import { Article } from "./article"
-import { Redis } from "@upstash/redis"
-import { Eye, Globe, Smartphone } from "lucide-react"
-import { Platform } from "@/types/enums"
-import PlatformIcon from "../components/platformIcon"
+import { Redis } from "@upstash/redis";
+import { allProjects } from "contentlayer/generated";
+import { Eye } from "lucide-react";
+import Link from "next/link";
+import { Card } from "../components/card";
+import { Navigation } from "../components/nav";
+import PlatformIcon from "../components/platformIcon";
+import { Article } from "./article";
 
-const redis = Redis.fromEnv()
+const redis = Redis.fromEnv();
 
-export const revalidate = 60
+export const revalidate = 120;
+
 export default async function ProjectsPage() {
   const views = (
     await redis.mget<number[]>(
       ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":"))
     )
   ).reduce((acc, v, i) => {
-    acc[allProjects[i].slug] = v ?? 0
-    return acc
-  }, {} as Record<string, number>)
+    acc[allProjects[i].slug] = v ?? 0;
+    return acc;
+  }, {} as Record<string, number>);
 
-  const featured = allProjects.find((project) => project.slug === "cowriter")!
-  const top2 = allProjects.find((project) => project.slug === "dineinorder")!
-  const top3 = allProjects.find((project) => project.slug === "tuntun")!
+  const featured = allProjects.find((project) => project.slug === "cowriter")!;
+  const top2 = allProjects.find((project) => project.slug === "dineinorder")!;
+  const top3 = allProjects.find((project) => project.slug === "tuntun")!;
   const sorted = allProjects
     .filter((p) => p.published)
     .filter(
@@ -37,7 +36,7 @@ export default async function ProjectsPage() {
       (a, b) =>
         new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
         new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
-    )
+    );
 
   return (
     <div className="relative pb-16">
@@ -137,5 +136,5 @@ export default async function ProjectsPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

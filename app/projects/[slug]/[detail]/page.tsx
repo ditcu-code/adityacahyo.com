@@ -1,21 +1,21 @@
-import { notFound } from "next/navigation"
-import { allProjects } from "contentlayer/generated"
-import { Mdx } from "@/app/components/mdx"
-import "../mdx.css"
-import { Redis } from "@upstash/redis"
-import { Header } from "../header"
-import { ReportView } from "../view"
-
-export const revalidate = 60
+import { Mdx } from "@/app/components/mdx";
+import { Redis } from "@upstash/redis";
+import { allProjects } from "contentlayer/generated";
+import { notFound } from "next/navigation";
+import { Header } from "../header";
+import "../mdx.css";
+import { ReportView } from "../view";
 
 type Props = {
   params: {
-    slug: string
-    detail: string
-  }
-}
+    slug: string;
+    detail: string;
+  };
+};
 
-const redis = Redis.fromEnv()
+const redis = Redis.fromEnv();
+
+export const revalidate = 60;
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
   return allProjects
@@ -23,24 +23,24 @@ export async function generateStaticParams(): Promise<Props["params"][]> {
     .map((p) => ({
       slug: p.slug,
       detail: p.slug,
-    }))
+    }));
 }
 
 export default async function DetailPage({ params }: Props) {
-  const slug = params?.slug
-  const detail = params.detail
-  const project = allProjects.find((project) => project.detail === detail)
+  const slug = params?.slug;
+  const detail = params.detail;
+  const project = allProjects.find((project) => project.detail === detail);
 
   if (!project) {
-    notFound()
+    notFound();
   }
 
-  const backLink = project.path.substring(0, project.path.lastIndexOf("/"))
+  const backLink = project.path.substring(0, project.path.lastIndexOf("/"));
   const views =
     process.env.NODE_ENV === "development"
       ? 0
       : (await redis.get<number>(["pageviews", "projects", slug].join(":"))) ??
-        0
+        0;
 
   return (
     <div className="bg-zinc-50 min-h-screen">
@@ -51,5 +51,5 @@ export default async function DetailPage({ params }: Props) {
         <Mdx code={project.body.code} />
       </article>
     </div>
-  )
+  );
 }
