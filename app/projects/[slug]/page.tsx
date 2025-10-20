@@ -14,6 +14,8 @@ type Props = {
 
 const redis = Redis.fromEnv();
 
+export const revalidate = 60;
+
 export async function generateStaticParams(): Promise<Props["params"][]> {
   return allProjects
     .filter((p) => p.published)
