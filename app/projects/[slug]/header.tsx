@@ -13,6 +13,7 @@ type Props = {
     description: string
     published?: boolean
     repository?: string
+    cardImage?: string
   }
 
   views: number

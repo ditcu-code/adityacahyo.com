@@ -1,5 +1,6 @@
 import type { Project } from "@/.contentlayer/generated";
 import Link from "next/link";
+import Image from "next/image";
 import { Eye } from "lucide-react";
 import PlatformIcon from "../components/platformIcon";
 
@@ -36,6 +37,23 @@ const MetaRow: React.FC<{ date?: string; views: number; variant: Variant }> = ({
   </div>
 );
 
+// Image source is provided by MDX frontmatter only (cardImage or images[0])
+
+const PreviewImage: React.FC<{ src?: string; alt: string; dim: number; className?: string }> = ({ src, alt, dim, className }) => {
+  if (!src) return null;
+  return (
+    <div className={`mt-4 inline-block rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900/40 ${className ?? ""}`.trim()}>
+      <Image
+        src={src}
+        alt={alt}
+        width={dim}
+        height={dim}
+        className="object-cover"
+      />
+    </div>
+  );
+};
+
 export const ProjectCard: React.FC<Props> = ({ project, views, variant = "list", className }) => {
   if (variant === "featured") {
     return (
@@ -53,6 +71,7 @@ export const ProjectCard: React.FC<Props> = ({ project, views, variant = "list",
           <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
             {project.description}
           </p>
+          <PreviewImage src={project.cardImage ?? project.images?.[0]} alt={`${project.title} preview`} dim={160} />
           <div className="absolute bottom-4 md:bottom-8">
             <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
               Read more <span aria-hidden="true">&rarr;</span>
@@ -75,6 +94,7 @@ export const ProjectCard: React.FC<Props> = ({ project, views, variant = "list",
         <p className="z-20 mt-4 text-sm  duration-1000 text-zinc-400 group-hover:text-zinc-200">
           {project.description}
         </p>
+        <PreviewImage src={project.cardImage ?? project.images?.[0]} alt={`${project.title} preview`} dim={96} />
       </article>
     </Link>
   );

@@ -26,6 +26,10 @@ export const Project = defineDocumentType(() => ({
 	contentType: "mdx",
 
 	fields: {
+		cardImage: {
+			type: "string",
+			description: "Image URL to show in project card",
+		},
 		published: {
 			type: "boolean",
 		},
