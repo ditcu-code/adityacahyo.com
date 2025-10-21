@@ -43,7 +43,7 @@ const PreviewImage: React.FC<{ src?: string; alt: string; dim: number; className
   if (!src) return null;
   return (
     <div
-      className={`mt-4 inline-block rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-900/60 ring-1 ring-inset ring-white/5 ${className ?? ""}`.trim()}
+      className={`mt-4 inline-block relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-900/60 ring-1 ring-inset ring-white/5 ${className ?? ""}`.trim()}
     >
       <Image
         src={src}
@@ -52,6 +52,7 @@ const PreviewImage: React.FC<{ src?: string; alt: string; dim: number; className
         height={dim}
         className="object-cover opacity-90 brightness-95 saturate-50"
       />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(24,24,27,0)_55%,rgba(9,9,11,0.45))]" />
     </div>
   );
 };
