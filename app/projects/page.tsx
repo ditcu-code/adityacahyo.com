@@ -1,11 +1,8 @@
 import { Redis } from "@upstash/redis";
 import { allProjects } from "contentlayer/generated";
-import { Eye } from "lucide-react";
-import Link from "next/link";
 import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
-import { Article } from "./article";
-import PlatformIcon from "../components/platformIcon";
+import { ProjectCard } from "./projectCard";
 
 const redis = Redis.fromEnv();
 
@@ -54,51 +51,21 @@ export default async function ProjectsPage() {
 
         <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
           <Card>
-            <Link href={`/projects/${featured.slug}`}>
-              <article className="relative w-full h-full p-4 md:p-8">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs text-zinc-100">
-                    {featured.date ? (
-                      <time dateTime={new Date(featured.date).toISOString()}>
-                        {Intl.DateTimeFormat(undefined, {
-                          dateStyle: "medium",
-                        }).format(new Date(featured.date))}
-                      </time>
-                    ) : (
-                      <span>SOON</span>
-                    )}
-                  </div>
-                  <span className="flex items-center gap-1 text-xs text-zinc-500">
-                    <Eye className="w-4 h-4" />{" "}
-                    {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-                      views[featured.slug] ?? 0
-                    )}
-                  </span>
-                </div>
-
-                <h2
-                  id="featured-post"
-                  className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display flex gap-1"
-                >
-                  {featured.title}
-                  <PlatformIcon project={featured} />
-                </h2>
-                <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-                  {featured.description}
-                </p>
-                <div className="absolute bottom-4 md:bottom-8">
-                  <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
-                    Read more <span aria-hidden="true">&rarr;</span>
-                  </p>
-                </div>
-              </article>
-            </Link>
+            <ProjectCard
+              project={featured}
+              views={views[featured.slug] ?? 0}
+              variant="featured"
+            />
           </Card>
 
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
             {[top2, top3].map((project) => (
               <Card key={project.slug}>
-                <Article project={project} views={views[project.slug] ?? 0} />
+                <ProjectCard
+                  project={project}
+                  views={views[project.slug] ?? 0}
+                  variant="list"
+                />
               </Card>
             ))}
           </div>
@@ -111,7 +78,11 @@ export default async function ProjectsPage() {
               .filter((_, i) => i % 3 === 0)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <ProjectCard
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                    variant="list"
+                  />
                 </Card>
               ))}
           </div>
@@ -120,7 +91,11 @@ export default async function ProjectsPage() {
               .filter((_, i) => i % 3 === 1)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <ProjectCard
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                    variant="list"
+                  />
                 </Card>
               ))}
           </div>
@@ -129,7 +104,11 @@ export default async function ProjectsPage() {
               .filter((_, i) => i % 3 === 2)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <ProjectCard
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                    variant="list"
+                  />
                 </Card>
               ))}
           </div>
