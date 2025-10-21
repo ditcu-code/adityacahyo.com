@@ -43,7 +43,7 @@ const PreviewImage: React.FC<{ src?: string; alt: string; dim: number; className
   if (!src) return null;
   return (
     <div
-      className={`mt-4 inline-block relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-900/60 ring-1 ring-inset ring-white/5 ${className ?? ""}`.trim()}
+      className={`mt-4 inline-block relative rounded-lg overflow-hidden border border-zinc-800/80 bg-zinc-900/60 ring-1 ring-inset ring-white/5 ${className ?? ""}`.trim()}
     >
       <Image
         src={src}
