@@ -4,7 +4,8 @@ import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
 import { ProjectCard } from "./projectCard";
 
-const redis = Redis.fromEnv();
+const isDevelopment = process.env.NODE_ENV === "development";
+const redis = isDevelopment ? null : Redis.fromEnv();
 
 export const revalidate = 120;
 
@@ -39,8 +40,12 @@ export default async function ProjectsPage() {
   const viewKeys = allProjects.map((project) =>
     ["pageviews", "projects", project.slug].join(":")
   );
-  const viewCounts = await redis.mget(...viewKeys) as (number | null)[];
-  const views = collectViews(viewCounts, allProjects);
+  const viewCounts = redis
+    ? ((await redis.mget(...viewKeys)) as unknown[]).map((v) =>
+        typeof v === "number" ? v : v === null ? 0 : Number(v) || 0
+      )
+    : Array.from({ length: allProjects.length }, () => 0);
+  const views = collectViews(viewCounts as (number | null)[], allProjects);
 
   const heroProjects = HERO_PROJECT_SLUGS.map((slug) =>
     allProjects.find((project) => project.slug === slug)
