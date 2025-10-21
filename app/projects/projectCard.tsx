@@ -91,7 +91,7 @@ export const ProjectCard: React.FC<Props> = ({ project, views, variant = "list",
           {project.title}
           <PlatformIcon project={project} />
         </h2>
-        <p className="z-20 mt-4 text-sm  duration-1000 text-zinc-400 group-hover:text-zinc-200">
+        <p className="z-20 mt-4 text-xs duration-1000 text-zinc-400 group-hover:text-zinc-200">
           {project.description}
         </p>
         <PreviewImage src={project.cardImage ?? project.images?.[0]} alt={`${project.title} preview`} dim={96} />
