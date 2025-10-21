@@ -29,7 +29,7 @@ export const Article: React.FC<Props> = ({ project, views }) => {
 						{Intl.NumberFormat("en-US", { notation: "compact" }).format(views)}
 					</span>
 				</div>
-				<h2 className="flex z-20 text-xl font-medium duration-1000 lg:text-3xl text-zinc-200 group-hover:text-white font-display">
+				<h2 className="flex z-20 text-xl font-medium duration-1000 lg:text-3xl text-zinc-200 group-hover:text-white font-display gap-1">
 					{project.title}
 					<PlatformIcon project={project}/>
 				</h2>
