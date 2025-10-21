@@ -56,6 +56,9 @@ export const Project = defineDocumentType(() => ({
 		appstoreUrl: {
 			type: "string",
 		},
+		playstoreUrl: {
+			type: "string",
+		},
 		images: {
 			type: "list",
 			of: { type: "string" },
