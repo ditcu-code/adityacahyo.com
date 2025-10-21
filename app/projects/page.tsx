@@ -4,8 +4,8 @@ import { Eye } from "lucide-react";
 import Link from "next/link";
 import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
-import PlatformIcon from "../components/platformIcon";
 import { Article } from "./article";
+import PlatformIcon from "../components/platformIcon";
 
 const redis = Redis.fromEnv();
 
@@ -21,9 +21,9 @@ export default async function ProjectsPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  const featured = allProjects.find((project) => project.slug === "cowriter")!;
-  const top2 = allProjects.find((project) => project.slug === "dineinorder")!;
-  const top3 = allProjects.find((project) => project.slug === "tuntun")!;
+  const featured = allProjects.find((project) => project.slug === "kelolaternak")!;
+  const top2 = allProjects.find((project) => project.slug === "kohai")!;
+  const top3 = allProjects.find((project) => project.slug === "cowriter")!;
   const sorted = allProjects
     .filter((p) => p.published)
     .filter(
@@ -78,7 +78,7 @@ export default async function ProjectsPage() {
 
                 <h2
                   id="featured-post"
-                  className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display flex"
+                  className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display flex gap-1"
                 >
                   {featured.title}
                   <PlatformIcon project={featured} />
