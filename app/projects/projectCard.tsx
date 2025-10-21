@@ -42,13 +42,15 @@ const MetaRow: React.FC<{ date?: string; views: number; variant: Variant }> = ({
 const PreviewImage: React.FC<{ src?: string; alt: string; dim: number; className?: string }> = ({ src, alt, dim, className }) => {
   if (!src) return null;
   return (
-    <div className={`mt-4 inline-block rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900/40 ${className ?? ""}`.trim()}>
+    <div
+      className={`mt-4 inline-block rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-900/60 ring-1 ring-inset ring-white/5 ${className ?? ""}`.trim()}
+    >
       <Image
         src={src}
         alt={alt}
         width={dim}
         height={dim}
-        className="object-cover"
+        className="object-cover opacity-90 brightness-95 saturate-50"
       />
     </div>
   );
