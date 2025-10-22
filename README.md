@@ -1,31 +1,50 @@
 <div align="center">
-    <a href="https://chronark.com"><h1 align="center">chronark.com</h1></a>
-    
-My personal website, built with [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/), [Upstash](https://upstash.com?ref=chronark.com), [Contentlayer](https://www.contentlayer.dev/) and deployed to [Vercel](https://vercel.com/).
-
+  <a href="https://adityacahyo.com"><h1 align="center">adityacahyo.com</h1></a>
+  <p>Personal website and project portfolio for Aditya Cahyo.</p>
 </div>
 
 <br/>
 
+## Stack
+- Next.js 13 App Router with TypeScript
+- Tailwind CSS for styling and typography
+- Contentlayer to source MDX content for projects
+- Upstash Redis for lightweight analytics
+- Deployed on Vercel Edge
 
-## Running Locally
+## Prerequisites
+- Node.js 18+
+- `pnpm` (recommended package manager)
+- Upstash Redis credentials (only required for production analytics)
 
+Create a `.env.local` file in the project root if you want to enable pageview counting:
 
-```sh-session
-git clone https://github.com/chronark/chronark.com.git
-cd chronark.com
+```dotenv
+UPSTASH_REDIS_REST_URL=...
+UPSTASH_REDIS_REST_TOKEN=...
 ```
 
+When `UPSTASH_*` variables are absent the app falls back to a no-op analytics mode locally.
 
-Create a `.env` file similar to [`.env.example`](https://github.com/chronark/chronark.com/blob/main/.env.example).
-
-Then install dependencies and run the development server:
+## Development
 ```sh-session
+git clone https://github.com/adityacahyo/adityacahyo.com.git
+cd adityacahyo.com
 pnpm install
 pnpm dev
 ```
 
+Useful scripts:
+- `pnpm build` – production build
+- `pnpm start` – run the production server locally
+- `pnpm fmt` – format & lint with Rome
 
-## Cloning / Forking
+## Project Structure
+- `app/` – App Router routes, layouts, and shared components
+- `pages/api/` – legacy API routes (e.g. pageview analytics)
+- `content/` – MDX content for projects
+- `public/` – static assets such as images and favicons
+- `types/`, `util/` – shared types and utilities
 
-Please remove all of my personal information (projects, images, etc.) before deploying your own version of this site.
+## Contributing / Forking
+Feel free to use this project as a reference. If you publish your own fork, please replace personal details (content entries, images, copy) with your own information.
