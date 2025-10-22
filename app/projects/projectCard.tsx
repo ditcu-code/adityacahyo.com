@@ -1,7 +1,7 @@
 import type { Project } from "@/.contentlayer/generated";
-import Link from "next/link";
-import Image from "next/image";
 import { Eye } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import PlatformIcon from "../components/platformIcon";
 
 type Variant = "featured" | "list";
@@ -61,7 +61,7 @@ export const ProjectCard: React.FC<Props> = ({ project, views, variant = "list",
   if (variant === "featured") {
     return (
       <Link href={`/projects/${project.slug}`}>
-        <article className={`relative w-full h-full p-4 md:p-8 ${className ?? ""}`.trim()}>
+        <article className={`relative w-full h-full p-4 pb-12 md:p-8 md:pb-16 ${className ?? ""}`.trim()}>
           <MetaRow date={project.date} views={views} variant="featured" />
 
           <h2
