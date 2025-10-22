@@ -9,10 +9,12 @@ type Props = {
     platform?: string
     url?: string
     appstoreUrl?: string
+    playstoreUrl?: string
     title: string
     description: string
     published?: boolean
     repository?: string
+    cardImage?: string
   }
 
   views: number
@@ -122,18 +124,29 @@ export const Header: React.FC<Props> = ({ project, views, backLink }) => {
             </p>
           </div>
 
-          {project.appstoreUrl != null && (
-            <a
-              className="py-4"
-              href={project.appstoreUrl}
-            >
-              <Image
-                alt="download cowriter in appstore"
-                src="/appstore.png"
-                width={200}
-                height={200}
-              />
-            </a>
+          {(project.appstoreUrl != null || project.playstoreUrl != null) && (
+            <div className="py-4 flex flex-col items-center gap-4 sm:flex-row">
+              {project.appstoreUrl != null && (
+                <a href={project.appstoreUrl}>
+                  <Image
+                    alt="Download on the App Store"
+                    src="/appstore.png"
+                    width={200}
+                    height={200}
+                  />
+                </a>
+              )}
+              {project.playstoreUrl != null && (
+                <a href={project.playstoreUrl}>
+                  <Image
+                    alt="Get it on Google Play"
+                    src="/playstore.png"
+                    width={190}
+                    height={190}
+                  />
+                </a>
+              )}
+            </div>
           )}
 
           {links.length > 0 && (

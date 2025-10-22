@@ -1,7 +1,7 @@
 "use client"
 import { Project } from "@/.contentlayer/generated"
 import { Platform } from "@/types/enums"
-import { Smartphone, Globe, Tablet, Watch } from "lucide-react"
+import { Globe, MonitorSmartphone, Smartphone, Tablet, Watch } from "lucide-react"
 
 type PlatformIconProps = { project: Project }
 const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
@@ -16,14 +16,17 @@ const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
                 <span className="text-xs tooltiptext">{Platform.ios}</span>
               </div>
             )
+          case Platform.iosAndroid:
+            return (
+              <div className="tooltip">
+                <Smartphone size={"12pt"} opacity={0.4} />
+                <span className="text-xs tooltiptext">{Platform.iosAndroid}</span>
+              </div>
+            )
           case Platform.ipados:
             return (
               <div className="tooltip">
-                <Tablet
-                  size={"12pt"}
-                  opacity={0.4}
-                  style={{ rotate: "-90deg" }}
-                />
+                <Tablet size={"12pt"} opacity={0.4} style={{ rotate: "-90deg" }} />
                 <span className="text-xs tooltiptext">{Platform.ipados}</span>
               </div>
             )
@@ -43,9 +46,8 @@ const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
             )
           case Platform.both:
             return (
-              <div className="flex tooltip">
-                <Smartphone size={"12pt"} opacity={0.4} />
-                <Globe size={"12pt"} opacity={0.4} />
+              <div className="tooltip">
+                <MonitorSmartphone size={"12pt"} opacity={0.4} />
                 <span className="text-xs tooltiptext">{Platform.both}</span>
               </div>
             )
@@ -58,26 +60,25 @@ const PlatformIcon: React.FC<PlatformIconProps> = ({ project }) => {
         /* Tooltip container */
         .tooltip {
           position: relative;
-          border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+          display: inline-flex;
+          align-items: center;
         }
 
-        /* Tooltip text */
         .tooltip .tooltiptext {
           visibility: hidden;
-          width: 100px;
+          position: absolute;
+          bottom: calc(100% + 4px);
+          left: 0;
+          z-index: 1;
+          display: inline-block;
+          white-space: nowrap;
           background-color: gray;
           color: #fff;
           text-align: center;
-          padding: 5px 0;
+          padding: 4px 8px;
           border-radius: 6px;
-          margin: 5px;
-
-          /* Position the tooltip text - see examples below! */
-          position: absolute;
-          z-index: 1;
         }
 
-        /* Show the tooltip text when you mouse over the tooltip container */
         .tooltip:hover .tooltiptext {
           visibility: visible;
         }

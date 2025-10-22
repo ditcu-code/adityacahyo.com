@@ -1,42 +1,62 @@
 import { Redis } from "@upstash/redis";
-import { allProjects } from "contentlayer/generated";
-import { Eye } from "lucide-react";
-import Link from "next/link";
+import { allProjects, type Project } from "contentlayer/generated";
 import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
-import PlatformIcon from "../components/platformIcon";
-import { Article } from "./article";
+import { ProjectCard } from "./projectCard";
 
-const redis = Redis.fromEnv();
+const isDevelopment = process.env.NODE_ENV === "development";
+const redis = isDevelopment ? null : Redis.fromEnv();
 
 export const revalidate = 120;
 
-export default async function ProjectsPage() {
-  const views = (
-    await redis.mget<number[]>(
-      ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":"))
-    )
-  ).reduce((acc, v, i) => {
-    acc[allProjects[i].slug] = v ?? 0;
-    return acc;
-  }, {} as Record<string, number>);
+const HERO_PROJECT_SLUGS = ["kelolaternak", "kohai", "cowriter"] as const;
+const HERO_PROJECT_SLUG_SET = new Set<string>(HERO_PROJECT_SLUGS);
+const COLUMN_COUNT = 3;
 
-  const featured = allProjects.find((project) => project.slug === "cowriter")!;
-  const top2 = allProjects.find((project) => project.slug === "dineinorder")!;
-  const top3 = allProjects.find((project) => project.slug === "tuntun")!;
-  const sorted = allProjects
-    .filter((p) => p.published)
-    .filter(
-      (project) =>
-        project.slug !== featured.slug &&
-        project.slug !== top2.slug &&
-        project.slug !== top3.slug
-    )
-    .sort(
-      (a, b) =>
-        new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
-        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
-    );
+type ViewsBySlug = Record<string, number>;
+
+function getDateValue(project: Project) {
+  return project.date ? new Date(project.date).getTime() : 0;
+}
+
+function collectViews(values: (number | null)[], projects: readonly Project[]): ViewsBySlug {
+  return projects.reduce<ViewsBySlug>((acc, project, index) => {
+    acc[project.slug] = values[index] ?? 0;
+    return acc;
+  }, {});
+}
+
+function distributeProjects(projects: readonly Project[], columnCount: number) {
+  return projects.reduce<Project[][]>(
+    (columns, project, index) => {
+      columns[index % columnCount].push(project);
+      return columns;
+    },
+    Array.from({ length: columnCount }, () => [] as Project[])
+  );
+}
+
+export default async function ProjectsPage() {
+  const viewKeys = allProjects.map((project) =>
+    ["pageviews", "projects", project.slug].join(":")
+  );
+  const viewCounts = redis
+    ? ((await redis.mget(...viewKeys)) as unknown[]).map((v) =>
+        typeof v === "number" ? v : v === null ? 0 : Number(v) || 0
+      )
+    : Array.from({ length: allProjects.length }, () => 0);
+  const views = collectViews(viewCounts as (number | null)[], allProjects);
+
+  const heroProjects = HERO_PROJECT_SLUGS.map((slug) =>
+    allProjects.find((project) => project.slug === slug)
+  ).filter((project): project is Project => Boolean(project));
+  const [featuredProject, ...supportingProjects] = heroProjects;
+
+  const remainingProjects = allProjects
+    .filter((project) => project.published)
+    .filter((project) => !HERO_PROJECT_SLUG_SET.has(project.slug))
+    .sort((a, b) => getDateValue(b) - getDateValue(a));
+  const projectColumns = distributeProjects(remainingProjects, COLUMN_COUNT);
 
   return (
     <div className="relative pb-16">
@@ -53,52 +73,24 @@ export default async function ProjectsPage() {
         <div className="w-full h-px bg-zinc-800" />
 
         <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
-          <Card>
-            <Link href={`/projects/${featured.slug}`}>
-              <article className="relative w-full h-full p-4 md:p-8">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs text-zinc-100">
-                    {featured.date ? (
-                      <time dateTime={new Date(featured.date).toISOString()}>
-                        {Intl.DateTimeFormat(undefined, {
-                          dateStyle: "medium",
-                        }).format(new Date(featured.date))}
-                      </time>
-                    ) : (
-                      <span>SOON</span>
-                    )}
-                  </div>
-                  <span className="flex items-center gap-1 text-xs text-zinc-500">
-                    <Eye className="w-4 h-4" />{" "}
-                    {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-                      views[featured.slug] ?? 0
-                    )}
-                  </span>
-                </div>
-
-                <h2
-                  id="featured-post"
-                  className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display flex"
-                >
-                  {featured.title}
-                  <PlatformIcon project={featured} />
-                </h2>
-                <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-                  {featured.description}
-                </p>
-                <div className="absolute bottom-4 md:bottom-8">
-                  <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
-                    Read more <span aria-hidden="true">&rarr;</span>
-                  </p>
-                </div>
-              </article>
-            </Link>
-          </Card>
+          {featuredProject && (
+            <Card>
+              <ProjectCard
+                project={featuredProject}
+                views={views[featuredProject.slug] ?? 0}
+                variant="featured"
+              />
+            </Card>
+          )}
 
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
-            {[top2, top3].map((project) => (
+            {supportingProjects.map((project) => (
               <Card key={project.slug}>
-                <Article project={project} views={views[project.slug] ?? 0} />
+                <ProjectCard
+                  project={project}
+                  views={views[project.slug] ?? 0}
+                  variant="list"
+                />
               </Card>
             ))}
           </div>
@@ -106,33 +98,19 @@ export default async function ProjectsPage() {
         <div className="hidden w-full h-px md:block bg-zinc-800" />
 
         <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 0)
-              .map((project) => (
+          {projectColumns.map((column, index) => (
+            <div key={index} className="grid grid-cols-1 gap-4">
+              {column.map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <ProjectCard
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                    variant="list"
+                  />
                 </Card>
               ))}
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 1)
-              .map((project) => (
-                <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
-                </Card>
-              ))}
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 2)
-              .map((project) => (
-                <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
-                </Card>
-              ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

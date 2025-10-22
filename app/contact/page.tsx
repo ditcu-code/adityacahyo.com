@@ -1,41 +1,48 @@
-"use client";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
 
-const socials = [
-	{
-		icon: <Linkedin size={20} />,
-		href: "https://www.linkedin.com/in/adityacahyo/",
-		label: "LinkedIn",
-		handle: "Aditya Cahyo",
-	},
-	{
-		icon: <Mail size={20} />,
-		href: "mailto:dev@adityacahyo.com",
-		label: "Email",
-		handle: "dev@adityacahyo.com",
-	},
-	{
-		icon: <Github size={20} />,
-		href: "https://github.com/ditcu-code",
-		label: "Github",
-		handle: "ditcu-code",
-	},
+type Social = {
+  icon: React.ReactNode;
+  href: string;
+  label: string;
+  handle: string;
+};
+
+const socials: Social[] = [
+  {
+    icon: <Linkedin size={20} />,
+    href: "https://www.linkedin.com/in/adityacahyo/",
+    label: "LinkedIn",
+    handle: "Aditya Cahyo",
+  },
+  {
+    icon: <Mail size={20} />,
+    href: "mailto:dev@adityacahyo.com",
+    label: "Email",
+    handle: "dev@adityacahyo.com",
+  },
+  {
+    icon: <Github size={20} />,
+    href: "https://github.com/ditcu-code",
+    label: "Github",
+    handle: "ditcu-code",
+  },
 ];
 
 export default function Example() {
 	return (
 		<div className=" bg-gradient-to-tl from-zinc-900/0 via-zinc-900 to-zinc-900/0">
 			<Navigation />
-			<div className="container flex items-center justify-center min-h-screen px-4 mx-auto">
+			<div className="container flex items-center justify-center min-h-[700px] h-screen px-4 mx-auto">
 				<div className="grid w-full grid-cols-1 gap-8 mx-auto mt-0 md:grid-cols-3 lg:gap-16">
 					{socials.map((s) => (
-						<Card>
+						<Card key={s.href}>
 							<Link
 								href={s.href}
 								target="_blank"
+								rel="noopener noreferrer"
 								className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 md:py-20 lg:pb-48 md:p-8"
 							>
 								<span
@@ -44,7 +51,7 @@ export default function Example() {
 								/>
 								<span className="relative z-10 flex items-center justify-center w-12 h-12 text-sm duration-1000 border rounded-full text-zinc-200 group-hover:text-white group-hover:bg-zinc-900 border-zinc-500 bg-zinc-900 group-hover:border-zinc-200 drop-shadow-orange">
 									{s.icon}
-								</span>{" "}
+								</span>
 								<div className="z-10 flex flex-col items-center">
 									<span className="text-xl font-medium text-center duration-150 lg:text-2xl xl:text-3xl text-zinc-200 group-hover:text-white font-display">
 										{s.handle}
