@@ -1,19 +1,16 @@
 import { Mdx } from "@/app/components/mdx";
-import { Redis } from "@upstash/redis";
 import { allProjects } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 import { Header } from "./header";
 import "./mdx.css";
 import { ReportView } from "./view";
+import { getProjectViewCount } from "./view-count";
 
 type Props = {
   params: {
     slug: string;
   };
 };
-
-const isDevelopment = process.env.NODE_ENV === "development";
-const redis = isDevelopment ? null : Redis.fromEnv();
 
 export const revalidate = 60;
 
@@ -27,16 +24,13 @@ export async function generateStaticParams(): Promise<Props["params"][]> {
 
 export default async function PostPage({ params }: Props) {
   const slug = params?.slug;
-  const project = allProjects.find((project) => project.slug === slug);
+  const project = allProjects.find((candidate) => candidate.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  const views = redis
-    ? (await redis.get<number>(["pageviews", "projects", slug].join(":"))) ??
-      0
-    : 0;
+  const views = await getProjectViewCount(project.slug);
 
   return (
     <div className="bg-zinc-50 min-h-screen">

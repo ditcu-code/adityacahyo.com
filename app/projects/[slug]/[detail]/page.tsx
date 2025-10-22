@@ -1,10 +1,10 @@
 import { Mdx } from "@/app/components/mdx";
-import { Redis } from "@upstash/redis";
 import { allProjects } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 import { Header } from "../header";
 import "../mdx.css";
 import { ReportView } from "../view";
+import { getProjectViewCount } from "../view-count";
 
 type Props = {
   params: {
@@ -12,9 +12,6 @@ type Props = {
     detail: string;
   };
 };
-
-const isDevelopment = process.env.NODE_ENV === "development";
-const redis = isDevelopment ? null : Redis.fromEnv();
 
 export const revalidate = 60;
 
@@ -37,10 +34,7 @@ export default async function DetailPage({ params }: Props) {
   }
 
   const backLink = project.path.substring(0, project.path.lastIndexOf("/"));
-  const views = redis
-    ? (await redis.get<number>(["pageviews", "projects", slug].join(":"))) ??
-      0
-    : 0;
+  const views = await getProjectViewCount(project.slug);
 
   return (
     <div className="bg-zinc-50 min-h-screen">
